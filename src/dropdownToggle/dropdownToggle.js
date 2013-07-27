@@ -20,6 +20,19 @@ angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['
     link: function(scope, element, attrs) {
       scope.$watch('$location.path', function() { closeMenu(); });
       element.parent().bind('click', function() { closeMenu(); });
+
+      if (attrs.dropdownHover) {
+        element.parent().bind('mouseover', function(event) {
+          event.stopPropagation();
+          element.parent().addClass('open');
+        });
+
+        element.parent().bind('mouseout', function(event) {
+          event.stopPropagation();
+          element.parent().removeClass('open');
+        });
+      }
+
       element.bind('click', function (event) {
 
         var elementWasOpen = (element === openElement);

@@ -14,7 +14,22 @@ describe('dropdownToggle', function() {
   function dropdown() {
     return $compile('<li class="dropdown"><a dropdown-toggle></a><ul dropdown-toggle><li>Hello</li></ul></li>')($rootScope);
   }
-  
+
+  function dropdownHover() {
+    return $compile('<li class="dropdown"><a dropdown-toggle dropdown-hover="true"></a><ul dropdown-toggle><li>Hello</li></ul></li>')($rootScope); 
+  }
+   
+  it('should toggle if hover is true', function() {
+    var elm = dropdownHover();
+    expect(elm.hasClass('open')).toBe(false);
+    elm.find('a').mouseover();
+    expect(elm.hasClass('open')).toBe(true);
+    
+    // only close the dropdown after exiting li tag.
+    elm.find('li').mouseout();
+    expect(elm.hasClass('close')).toBe(false);
+  });
+
   it('should toggle on `a` click', function() {
     var elm = dropdown();
     expect(elm.hasClass('open')).toBe(false);
